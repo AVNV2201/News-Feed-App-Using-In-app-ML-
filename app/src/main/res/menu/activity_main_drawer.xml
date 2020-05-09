@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/weather_menu"
+            android:title="Weather"/>
+
+        <item android:title="Category"
+            android:id="@+id/category_menu"/>
+
+        <item android:id="@+id/read_news_later"
+            android:title="Read Later"/>
+
+        <item android:id="@+id/news_notes"
+            android:title="Saved Notes"/>
+
+    </group>
+
+    <item android:title="Other">
+
+        <menu>
+
+            <item android:id="@+id/account_menu"
+                android:title="My Account"/>
+
+            <item android:title="About"
+                android:id="@+id/about"/>
+
+            <item android:title="Share"
+                android:id="@+id/share_app"/>
+
+        </menu>
+
+    </item>
+
+</menu>
