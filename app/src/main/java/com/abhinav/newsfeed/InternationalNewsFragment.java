@@ -20,8 +20,9 @@ public class InternationalNewsFragment extends Fragment {
 
         RecyclerView recyclerView = root.findViewById(R.id.internationalrcView);
         recyclerView.setLayoutManager( new LinearLayoutManager(root.getContext()));
-        NewsCardAdapter internationalNewsCardAdapter = new NewsCardAdapter(root.getContext(),null);
-        recyclerView.setAdapter(internationalNewsCardAdapter);
+
+        NewsDownloadHelper downloadHelper = new NewsDownloadHelper(root.getContext());
+        downloadHelper.getNewsList(recyclerView, ResourceHelper.Country.US, null);
 
         return root;
     }

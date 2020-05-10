@@ -2,15 +2,19 @@ package com.abhinav.newsfeed;
 
 import android.os.Bundle;
 import android.speech.RecognitionListener;
+import android.telephony.euicc.DownloadableSubscription;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 public class NationalNewsFragment extends Fragment {
 
@@ -21,8 +25,9 @@ public class NationalNewsFragment extends Fragment {
 
         RecyclerView recyclerView = root.findViewById(R.id.nationalrcView);
         recyclerView.setLayoutManager( new LinearLayoutManager(root.getContext()));
-        NewsCardAdapter nationalNewsCardAdapter = new NewsCardAdapter(root.getContext(), null);
-        recyclerView.setAdapter(nationalNewsCardAdapter);
+
+        NewsDownloadHelper downloadHelper = new NewsDownloadHelper(root.getContext());
+        downloadHelper.getNewsList( recyclerView , ResourceHelper.Country.INDIA,null);
 
         return root;
     }

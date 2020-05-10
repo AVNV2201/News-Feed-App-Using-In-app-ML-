@@ -1,6 +1,9 @@
 package com.abhinav.newsfeed;
 
 import android.content.Context;
+import android.util.Log;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -13,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class NewsDownloadHelper {
@@ -23,9 +27,13 @@ public class NewsDownloadHelper {
         this.context = context;
     }
 
-    public ArrayList<News> getNewsList( String url ){
+    public ArrayList<News> getNewsList(final RecyclerView recyclerView, String country, final String category ){
 
-        final ArrayList<News> result = null;
+        final ArrayList<News> result = new ArrayList<>();
+        String url = ResourceHelper.NEWS_URL + "country=" + country ;
+        if( category != null )
+            url += "&category=" + category;
+        url += "&apiKey=" + ResourceHelper.NEWS_API_KEY;
 
         JsonObjectRequest request = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -34,7 +42,7 @@ public class NewsDownloadHelper {
                     public void onResponse(JSONObject response) {
                         try {
                             JSONArray articles = response.getJSONArray("articles");
-                            String title, description, category = null, urlToNews, urlToImage;
+                            String title, description, urlToNews, urlToImage;
                             for( int i = 0; i < articles.length(); i++ ){
                                 JSONObject article = articles.getJSONObject(i);
                                 title = article.getString("title");
@@ -43,21 +51,24 @@ public class NewsDownloadHelper {
                                 urlToNews = article.getString("url");
                                 result.add(new News(title,description,category, urlToNews,urlToImage));
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        } catch (Exception e) {
+                            Log.i("Error:::::::::::::::",e.getMessage());
                         }
+                        Log.i("Secces::::::::::::",result.toString());
+                        NewsCardAdapter nationalNewsCardAdapter = new NewsCardAdapter(context, result);
+                        recyclerView.setAdapter(nationalNewsCardAdapter);
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
+
+                        Log.i("Error:::::::::::::::", error.getMessage());
                     }
                 });
 
         RequestQueue queue = Volley.newRequestQueue( context );
         queue.add(request);
-
         return result;
     }
 }
