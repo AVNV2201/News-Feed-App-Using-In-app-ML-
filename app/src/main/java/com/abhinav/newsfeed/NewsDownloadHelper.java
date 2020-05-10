@@ -13,10 +13,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class NewsDownloadHelper {
@@ -27,7 +25,7 @@ public class NewsDownloadHelper {
         this.context = context;
     }
 
-    public ArrayList<News> getNewsList(final RecyclerView recyclerView, String country, final String category ){
+    public void getNewsList(final RecyclerView recyclerView, String country, final String category ){
 
         final ArrayList<News> result = new ArrayList<>();
         String url = ResourceHelper.NEWS_URL + "country=" + country ;
@@ -69,6 +67,5 @@ public class NewsDownloadHelper {
 
         RequestQueue queue = Volley.newRequestQueue( context );
         queue.add(request);
-        return result;
     }
 }

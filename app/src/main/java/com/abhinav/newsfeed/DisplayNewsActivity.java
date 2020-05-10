@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class DisplayNewsActivity extends AppCompatActivity {
 
@@ -69,6 +72,14 @@ public class DisplayNewsActivity extends AppCompatActivity {
                 super.onPageFinished(view, url);
                 progressBar.setVisibility(View.INVISIBLE);
                 displayNewsWebView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        FloatingActionButton fab = findViewById(R.id.addNoteFab) ;
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity( new Intent( DisplayNewsActivity.this, NotesEditorActivity.class) );
             }
         });
 
