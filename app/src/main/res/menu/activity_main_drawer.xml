@@ -10,6 +10,7 @@
             android:id="@+id/category_menu"/>
 
         <item android:id="@+id/read_news_later"
+            android:icon="@drawable/read_later_saved"
             android:title="Read Later"/>
 
         <item android:id="@+id/news_notes"
@@ -25,9 +26,11 @@
                 android:title="My Account"/>
 
             <item android:title="About"
+                android:icon="@drawable/ic_about"
                 android:id="@+id/about"/>
 
             <item android:title="Share"
+                android:icon="@drawable/share_icon"
                 android:id="@+id/share_app"/>
 
         </menu>

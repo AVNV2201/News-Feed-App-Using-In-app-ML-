@@ -1,6 +1,7 @@
 package com.abhinav.newsfeed;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +34,21 @@ class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.NewsCardViewH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NewsCardViewHolder holder, int position) {
-        News news = newsCard.get(position);
+    public void onBindViewHolder(@NonNull final NewsCardViewHolder holder, int position) {
+        final News news = newsCard.get(position);
         holder.newsCardTExt.setText(news.getTitle());
-        Glide.with(holder.newsCardImage.getContext()).load(news.getUrlToImage()).into(holder.newsCardImage);
+        Glide.with(context).load(news.getUrlToImage()).into(holder.newsCardImage);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DisplayNewsActivity.class);
+                intent.putExtra("TITLE", news.getTitle());
+                intent.putExtra("DESC", news.getDescription());
+                intent.putExtra("URL", news.getUrlToNews());
+                intent.putExtra("IMGURL", news.getUrlToImage());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
