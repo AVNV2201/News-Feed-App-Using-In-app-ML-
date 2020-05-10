@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class InternationalNewsFragment extends Fragment {
 
@@ -15,6 +17,12 @@ public class InternationalNewsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_international_news, container, false);
+
+        RecyclerView recyclerView = root.findViewById(R.id.internationalrcView);
+        recyclerView.setLayoutManager( new LinearLayoutManager(root.getContext()));
+        NewsCardAdapter internationalNewsCardAdapter = new NewsCardAdapter(root.getContext(),null);
+        recyclerView.setAdapter(internationalNewsCardAdapter);
+
         return root;
     }
 }
