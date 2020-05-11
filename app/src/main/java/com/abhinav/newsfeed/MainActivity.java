@@ -52,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
 
+                if( id == R.id.weather_menu ){
+                    startActivity( new Intent( MainActivity.this, WeatherActivity.class));
+                    return true;
+                }
+
                 return false;
             }
         });
