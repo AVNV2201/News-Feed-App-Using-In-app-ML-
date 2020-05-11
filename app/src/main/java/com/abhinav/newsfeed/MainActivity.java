@@ -74,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
 
+                if( id == R.id.category_menu ){
+                    startActivity(new Intent(MainActivity.this, CountrySelectActivity.class));
+                    return true;
+                }
+
                 return false;
             }
         });

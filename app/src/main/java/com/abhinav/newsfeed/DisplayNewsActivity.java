@@ -79,7 +79,9 @@ public class DisplayNewsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity( new Intent( DisplayNewsActivity.this, NotesEditorActivity.class) );
+                Intent intent = new Intent( DisplayNewsActivity.this, NotesActivity.class);
+                intent.putExtra("flag",1);
+                startActivity(intent);
             }
         });
 

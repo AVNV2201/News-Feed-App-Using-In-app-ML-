@@ -42,7 +42,7 @@ public class NotesEditorActivity extends AppCompatActivity {
 
                 NotesActivity.notesTitle.set( noteId, String.valueOf( s ) ) ;
 
-                String str = null;
+                String str ;
                 try {
                     str = ObjectSerializer.serialize(NotesActivity.notesTitle );
                     MainActivity.sharedPreferences.edit().putString( "notesTitle", str ).apply();

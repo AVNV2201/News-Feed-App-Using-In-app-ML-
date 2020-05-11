@@ -74,4 +74,21 @@ public class ResourceHelper {
             )
     );
 
+    static  ArrayList<String> countryCodes = new ArrayList<>(
+            Arrays.asList(
+                    "in", "us", "gb", "au", "jp"
+            )
+    );
+
+    static  ArrayList<String> categoryCodes = new ArrayList<>(
+            Arrays.asList(
+                    "health",
+                    "business",
+                    "technology",
+                    "entertainment",
+                    "science",
+                    "sports"
+            )
+    );
+
 }

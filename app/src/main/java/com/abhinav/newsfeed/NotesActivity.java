@@ -51,6 +51,11 @@ public class NotesActivity extends AppCompatActivity {
             notesContent.add("") ;
         }
 
+//        if( getIntent().getIntExtra("flag", -1 ) != -1 ){
+//            startActivity( new Intent( NotesActivity.this, NotesEditorActivity.class) );
+//            finish();
+//        }
+
         RecyclerView recyclerView = findViewById(R.id.notesRV);
         recyclerView.setLayoutManager( new LinearLayoutManager(this));
 

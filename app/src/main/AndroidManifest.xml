@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CountrySelectActivity"></activity>
+        <activity android:name=".CategoryNewsActivity"></activity>
+        <activity android:name=".CategorySelectActivity" />
+        <activity android:name=".CountrySelectActivity" />
         <activity android:name=".MyAccountActivity" />
         <activity android:name=".AboutActivity" />
         <activity android:name=".WeatherActivity" />
