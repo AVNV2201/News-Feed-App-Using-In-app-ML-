@@ -10,10 +10,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
+import java.time.chrono.MinguoChronology;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,6 +56,21 @@ public class MainActivity extends AppCompatActivity {
 
                 if( id == R.id.weather_menu ){
                     startActivity( new Intent( MainActivity.this, WeatherActivity.class));
+                    return true;
+                }
+
+                if( id == R.id.share_app){
+                    Toast.makeText(MainActivity.this, "Feature will be implemented when this app will be on PlayStore :)", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+
+                if( id == R.id.about){
+                    startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                    return true;
+                }
+
+                if( id == R.id.account_menu ){
+                    startActivity( new Intent(MainActivity.this, MyAccountActivity.class));
                     return true;
                 }
 

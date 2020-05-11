@@ -1,5 +1,8 @@
 package com.abhinav.newsfeed;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class ResourceHelper {
 
     static String NEWS_API_KEY = "ed99e8bfdeb44fc381142c485ef29a88" ;
@@ -28,5 +31,47 @@ public class ResourceHelper {
         static String TECHNOLOGY = "technology";
 
     }
+
+    static ArrayList<String> countryNameList = new ArrayList<>(
+            Arrays.asList(
+                    "INDIA",
+                    "UNITED STATES",
+                    "UNITED KINGDOM",
+                    "AUSTRALIA",
+                    "JAPAN"
+            )
+    );
+
+    static ArrayList<String> categoryNameList = new ArrayList<>(
+            Arrays.asList(
+                    "HEALTH",
+                    "BUSINESS",
+                    "TECHNOLOGY",
+                    "ENTERTAINMENT",
+                    "SCIENCE",
+                    "SPORTS"
+            )
+    );
+
+    static ArrayList<Integer> categoryImageList = new ArrayList<>(
+            Arrays.asList(
+                    R.drawable.cat_health,
+                    R.drawable.cat_business,
+                    R.drawable.cat_technology,
+                    R.drawable.cat_entertainment,
+                    R.drawable.cat_science,
+                    R.drawable.cat_sports
+            )
+    );
+
+    static ArrayList<Integer> countryFlagsImageList = new ArrayList<>(
+            Arrays.asList(
+                    R.drawable.c_in,
+                    R.drawable.c_us,
+                    R.drawable.c_gb,
+                    R.drawable.c_au,
+                    R.drawable.c_jp
+            )
+    );
 
 }

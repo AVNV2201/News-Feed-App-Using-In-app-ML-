@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">News Feed</string>
+    <string name="about_app_0">News Feed Android App : Version:1.0.0</string>
+    <string name="about_app_1">
+        News Feed provides with all the news across the globe of your interests only :)
+    </string>
+    <string name="about_app_2">Currently News Feed Provides news from India and 5 other countries over 6 categories
+        Our only goal is that the user should get the news of their own interests only.</string>
+    <string name="about_app_3">News Feed is also an Open Source Project.
+        You can check out the code base at <b>https://github.com/AVNV2201/News-Feed-Mini-Project-/</b> .
+        So feel free to contribute.</string>
+    <string name="about_app_4">Currently, It provides the features such as Making Notes, Getting weather updates, saving news through Red Later Mode and getting news country_wise and category_wise</string>
 </resources>
