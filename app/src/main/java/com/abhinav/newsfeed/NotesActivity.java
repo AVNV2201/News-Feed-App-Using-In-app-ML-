@@ -27,6 +27,7 @@ public class NotesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
+        setTitle("Notes");
 
         notesContent = new ArrayList<>() ;
         notesTitle = new ArrayList<>() ;
@@ -51,11 +52,6 @@ public class NotesActivity extends AppCompatActivity {
             notesContent.add("") ;
         }
 
-//        if( getIntent().getIntExtra("flag", -1 ) != -1 ){
-//            startActivity( new Intent( NotesActivity.this, NotesEditorActivity.class) );
-//            finish();
-//        }
-
         RecyclerView recyclerView = findViewById(R.id.notesRV);
         recyclerView.setLayoutManager( new LinearLayoutManager(this));
 
@@ -69,5 +65,26 @@ public class NotesActivity extends AppCompatActivity {
                 startActivity( new Intent( NotesActivity.this, NotesEditorActivity.class) );
             }
         });
+
+        if( getIntent().getIntExtra("flag", -1 ) != -1 ){
+            startActivity( new Intent( NotesActivity.this, NotesEditorActivity.class) );
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        try {
+            String str = ObjectSerializer.serialize(notesTitle );
+            MainActivity.sharedPreferences.edit().putString( "notesTitle", str ).apply();
+
+            str = ObjectSerializer.serialize( notesContent ) ;
+            MainActivity.sharedPreferences.edit().putString("notesContent", str).apply();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

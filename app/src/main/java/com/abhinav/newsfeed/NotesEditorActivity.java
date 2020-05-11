@@ -33,54 +33,28 @@ public class NotesEditorActivity extends AppCompatActivity {
 
         noteTitleEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
                 NotesActivity.notesTitle.set( noteId, String.valueOf( s ) ) ;
-
-                String str ;
-                try {
-                    str = ObjectSerializer.serialize(NotesActivity.notesTitle );
-                    MainActivity.sharedPreferences.edit().putString( "notesTitle", str ).apply();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+            public void afterTextChanged(Editable s) {}
         });
 
         noteContentEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
                 NotesActivity.notesContent.set( noteId, String.valueOf(s) ) ;
-
-                try {
-                    String str = ObjectSerializer.serialize( NotesActivity.notesContent ) ;
-                    MainActivity.sharedPreferences.edit().putString("notesContent", str).apply();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+            public void afterTextChanged(Editable s) {}
         });
     }
 
