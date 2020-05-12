@@ -5,13 +5,11 @@
     <item android:title="Read Later"
         android:id="@+id/read_later_display_news"
         android:icon="@drawable/read_later"
-        android:iconTint="@color/coloeWhite"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/share_display_menu"
         android:title="Share"
-        android:icon="@drawable/share_icon"
-        android:iconTint="@color/coloeWhite"
+        android:icon="@drawable/ic_share_white"
         app:showAsAction="always"/>
 
 </menu>

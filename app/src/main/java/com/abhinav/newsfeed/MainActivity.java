@@ -6,26 +6,43 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
-import java.time.chrono.MinguoChronology;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     static SharedPreferences sharedPreferences;
+    static SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        try {
+            if( !ResourceHelper.isConnected() ){
+                findViewById(R.id.noInternetImage).setVisibility(View.VISIBLE);
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Something went Wrong!",Toast.LENGTH_SHORT).show();
+        }
+
+        database = this.openOrCreateDatabase( StorageHelper.DATABASE_NAME, Context.MODE_PRIVATE,null);
+        String sql = "CREATE TABLE IF NOT EXISTS " + StorageHelper.TABLE_NAME + " ( id INTEGER PRIMARY KEY, title VARCHAR, description VARCHAR, url_to_news VARCHAR, url_to_image VARCHAR )";
+        database.execSQL(sql);
+
+
 
         sharedPreferences = getApplicationContext().getSharedPreferences( "com.abhinav.newsfeed", MODE_PRIVATE );
 
@@ -76,6 +93,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if( id == R.id.category_menu ){
                     startActivity(new Intent(MainActivity.this, CountrySelectActivity.class));
+                    return true;
+                }
+
+                if( id == R.id.read_news_later){
+                    startActivity(new Intent(MainActivity.this, ReadLaterActivity.class));
                     return true;
                 }
 

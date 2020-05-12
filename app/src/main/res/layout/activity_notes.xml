@@ -23,9 +23,9 @@
         android:layout_height="72dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
+        android:src="@drawable/ic_notes"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/dialog_frame" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

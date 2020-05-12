@@ -4,9 +4,11 @@
     <group android:checkableBehavior="single">
 
         <item android:id="@+id/weather_menu"
+            android:icon="@drawable/ic_weather"
             android:title="Weather"/>
 
         <item android:title="Category"
+            android:icon="@drawable/ic_categories"
             android:id="@+id/category_menu"/>
 
         <item android:id="@+id/read_news_later"
@@ -14,6 +16,7 @@
             android:title="Read Later"/>
 
         <item android:id="@+id/news_notes"
+            android:icon="@drawable/ic_notes"
             android:title="Saved Notes"/>
 
     </group>
@@ -23,6 +26,7 @@
         <menu>
 
             <item android:id="@+id/account_menu"
+                android:icon="@drawable/ic_user"
                 android:title="My Account"/>
 
             <item android:title="About"

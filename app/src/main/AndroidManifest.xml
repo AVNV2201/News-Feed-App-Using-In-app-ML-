@@ -3,6 +3,7 @@
     package="com.abhinav.newsfeed">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -12,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CategoryNewsActivity"></activity>
+        <activity android:name=".ReadLaterActivity"/>
+        <activity android:name=".CategoryNewsActivity" />
         <activity android:name=".CategorySelectActivity" />
         <activity android:name=".CountrySelectActivity" />
         <activity android:name=".MyAccountActivity" />

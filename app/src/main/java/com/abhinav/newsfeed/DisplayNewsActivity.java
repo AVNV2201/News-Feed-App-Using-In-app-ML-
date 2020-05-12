@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Display;
@@ -23,17 +24,26 @@ public class DisplayNewsActivity extends AppCompatActivity {
 
     String title, description, urlToNews, urlToImage;
     ProgressBar progressBar;
+    int isSavedInRwadLater ;
+    SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_news);
+        setTitle("News Article");
 
         Intent intent = getIntent();
         title = intent.getStringExtra("TITLE");
         description = intent.getStringExtra("DESC");
         urlToNews = intent.getStringExtra("URL");
         urlToImage = intent.getStringExtra("IMGURL");
+
+        if( StorageHelper.isStoredInDatabase(database, urlToNews ) ){
+            isSavedInRwadLater = 1;
+        } else {
+            isSavedInRwadLater = 0;
+        }
 
         progressBar = findViewById(R.id.displaynewsProgressBar);
         final WebView displayNewsWebView = findViewById(R.id.displayNewsWebView);
@@ -90,7 +100,18 @@ public class DisplayNewsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.display_news_menu,menu);
-        return super.onCreateOptionsMenu(menu);
+
+        MenuItem readLateMenu = menu.findItem(R.id.read_later_display_news);
+        if( isSavedInRwadLater == 0 ){
+            readLateMenu.setIcon(R.drawable.read_later);
+        } else {
+            readLateMenu.setIcon(R.drawable.read_later_saved);
+        }
+
+        MenuItem shareMenu = menu.findItem(R.id.share_display_menu);
+        
+
+        return true;
     }
 
     @Override
@@ -99,10 +120,22 @@ public class DisplayNewsActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if( id == R.id.read_later_display_news){
-            Toast.makeText(this, "Saved To Read Later", Toast.LENGTH_SHORT).show();
-            return true;
+            
+            if( isSavedInRwadLater == 0 ){
+
+                item.setIcon(R.drawable.read_later_saved);
+                News news = new News(title, description, "", urlToNews, urlToImage);
+                StorageHelper.insertNewsIntoDatabase( database, news);
+
+                Toast.makeText(DisplayNewsActivity.this, "Saved to Read Later", Toast.LENGTH_SHORT).show();
+                isSavedInRwadLater = 1;
+
+            } else {
+                Toast.makeText(DisplayNewsActivity.this, "Already Saved", Toast.LENGTH_SHORT).show();
+            }
+            
         }
 
-        return false ;
+        return true ;
     }
 }
