@@ -8,13 +8,14 @@
 
     <ImageView
         android:id="@+id/myAccountImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="256dp"
+        android:layout_height="256dp"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="128dp"
+        android:src="@drawable/ic_user"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/search" />
+        />
 
     <TextView
         android:id="@+id/accountName"
@@ -46,6 +47,7 @@
         android:layout_height="wrap_content"
         android:text="Sign Out"
         android:padding="16dp"
+        android:onClick="signOut"
         android:layout_marginTop="32dp"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -136,6 +136,17 @@ public class DisplayNewsActivity extends AppCompatActivity {
             
         }
 
+        if( id == R.id.share_display_menu){
+
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Have a Look at this news: ");
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, urlToNews);
+            startActivity(Intent.createChooser(sharingIntent, "Share via"));
+
+            return true;
+        }
+
         return true ;
     }
 }
