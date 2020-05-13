@@ -3,6 +3,7 @@ package com.abhinav.newsfeed;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
     static SharedPreferences sharedPreferences;
     static SQLiteDatabase database;
+
+    DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         viewPagerMain.setAdapter(newsFragmentPageAdapter);
         tabLayout.setupWithViewPager(viewPagerMain);
 
-        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(MainActivity.this ,drawerLayout,R.string.app_name,R.string.app_name);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -68,42 +71,51 @@ public class MainActivity extends AppCompatActivity {
 
                 if( id == R.id.news_notes){
                     startActivity( new Intent( MainActivity.this, NotesActivity.class));
-                    return true;
                 }
 
                 if( id == R.id.weather_menu ){
                     startActivity( new Intent( MainActivity.this, WeatherActivity.class));
-                    return true;
                 }
 
                 if( id == R.id.share_app){
                     Toast.makeText(MainActivity.this, "Feature will be implemented when this app will be on PlayStore :)", Toast.LENGTH_SHORT).show();
-                    return true;
                 }
 
                 if( id == R.id.about){
                     startActivity(new Intent(MainActivity.this, AboutActivity.class));
-                    return true;
                 }
 
                 if( id == R.id.account_menu ){
                     startActivity( new Intent(MainActivity.this, MyAccountActivity.class));
-                    return true;
                 }
 
                 if( id == R.id.category_menu ){
                     startActivity(new Intent(MainActivity.this, CountrySelectActivity.class));
-                    return true;
                 }
 
                 if( id == R.id.read_news_later){
                     startActivity(new Intent(MainActivity.this, ReadLaterActivity.class));
-                    return true;
                 }
 
-                return false;
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if( item.getItemId() == android.R.id.home){
+            if( drawerLayout.isDrawerOpen(GravityCompat.START) ){
+                drawerLayout.closeDrawer(GravityCompat.START);
+            } else {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
