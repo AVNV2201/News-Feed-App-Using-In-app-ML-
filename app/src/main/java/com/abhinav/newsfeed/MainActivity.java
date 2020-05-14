@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -19,12 +20,22 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     static SharedPreferences sharedPreferences;
     static SQLiteDatabase database;
+
+    static int no_of_rounds;
+    static int total_selections ;
+    static ArrayList<Integer> no_of_selections;
+    static ArrayList<Integer> no_of_rewards;
+    static ArrayList<Integer> selections ;
+    static ArrayList<Boolean> clicked;
 
     DrawerLayout drawerLayout;
 
@@ -33,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // checking for internet connectivity
         try {
             if( !ResourceHelper.isConnected() ){
                 findViewById(R.id.noInternetImage).setVisibility(View.VISIBLE);
@@ -41,14 +53,35 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Something went Wrong!",Toast.LENGTH_SHORT).show();
         }
 
+        // opening database and table
         database = this.openOrCreateDatabase( StorageHelper.DATABASE_NAME, Context.MODE_PRIVATE,null);
         String sql = "CREATE TABLE IF NOT EXISTS " + StorageHelper.TABLE_NAME + " ( id INTEGER PRIMARY KEY, title VARCHAR, description VARCHAR, url_to_news VARCHAR, url_to_image VARCHAR )";
         database.execSQL(sql);
 
 
-
+        // getting permanent storage access of shared preferences
         sharedPreferences = getApplicationContext().getSharedPreferences( "com.abhinav.newsfeed", MODE_PRIVATE );
 
+        // ML Data initialization
+        no_of_rounds = 1;
+        total_selections = 0;
+        no_of_rewards = new ArrayList<>();
+        no_of_selections = new ArrayList<>();
+        selections = new ArrayList<>();
+        initializeMLData();
+
+        selections = MLHelper.getSelectionList( no_of_selections,
+                                                no_of_rewards,
+                                                no_of_rounds,
+                                                MLHelper.CUBIC_FILTER
+                                                 );
+        for( int i = 0; i < selections.size(); i++ ){
+            total_selections += selections.get(i);
+            no_of_selections.set(i, no_of_selections.get(i) + selections.get(i) );
+        }
+        clicked = new ArrayList<>(Collections.nCopies(total_selections,false));
+
+        // initializing layout
         ViewPager viewPagerMain = findViewById(R.id.mainViewPager);
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         NewsFragmentPageAdapter newsFragmentPageAdapter = new NewsFragmentPageAdapter(getSupportFragmentManager());
@@ -116,6 +149,44 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    void initializeMLData(){
+
+        int no_of_categories = ResourceHelper.categoryCodes.size();
+
+        no_of_rounds = sharedPreferences.getInt(MLHelper.storageNameForNoOfRounds,1);
+
+        ArrayList<String> tmp1 = new ArrayList<>();
+        ArrayList<String> tmp2= new ArrayList<>();
+
+        try {
+
+            tmp1 = (ArrayList<String>) ObjectSerializer.deserialize( sharedPreferences.getString(
+                    MLHelper.storageNameForNoOfSelections, ObjectSerializer.serialize( new ArrayList<String>() ) ) ) ;
+            tmp2 = (ArrayList<String>) ObjectSerializer.deserialize( sharedPreferences.getString(
+                    MLHelper.storageNameForNoOfRewards, ObjectSerializer.serialize( new ArrayList<String>() ) ) ) ;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Log.i("check 1:::::::::::::::::::","done");
+
+        if( tmp1 == null || tmp2 == null ||
+                tmp1.size() != no_of_categories || tmp2.size() != no_of_categories ){
+            for( int i = 0; i < no_of_categories; i++ ){
+                no_of_selections.add(0);
+                no_of_rewards.add(0);
+            }
+        } else {
+            for( int i = 0; i < no_of_categories; i++ ) {
+                no_of_selections.add(Integer.parseInt(tmp1.get(i)));
+                no_of_rewards.add(Integer.parseInt(tmp2.get(i)));
+            }
+        }
+        Log.i("check 2 :::::::::::::::::::::::::","done");
     }
 
     @Override

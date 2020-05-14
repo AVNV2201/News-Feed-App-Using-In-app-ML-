@@ -1,8 +1,12 @@
 package com.abhinav.newsfeed;
 
+import androidx.annotation.Nullable;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ResourceHelper {
 
@@ -91,6 +95,15 @@ public class ResourceHelper {
                     "sports"
             )
     );
+
+    static HashMap<String,Integer> categoryMap = new HashMap<String,Integer>(){{
+        put( "health", 0 );
+        put("business",1);
+        put("technology",2);
+        put("entertainment",3);
+        put("science",4);
+        put("sports",5);
+    }};
 
     static public boolean isConnected() throws InterruptedException, IOException {
         final String command = "ping -c 1 google.com";

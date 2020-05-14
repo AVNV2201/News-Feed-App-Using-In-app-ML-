@@ -16,21 +16,25 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
-public class NewsDownloadHelper {
+public class MLBasedNewsDownloadHelper {
 
     private Context context;
 
-    NewsDownloadHelper(Context context){
+    MLBasedNewsDownloadHelper(Context context){
         this.context = context;
     }
 
-    void setNewsList(final RecyclerView recyclerView, final ArrayList<News> newsList, String country, final String category){
+    void setNewsList(final RecyclerView recyclerView,
+                     final ArrayList<News> newsList,
+                     String country,
+                     final String category,
+                     final int maxNoOfNews){
 
         String url = ResourceHelper.NEWS_URL + "country=" + country ;
-        if( category != null )
-            url += "&category=" + category;
+        url += "&category=" + category;
         url += "&apiKey=" + ResourceHelper.NEWS_API_KEY;
 
         JsonObjectRequest request = new JsonObjectRequest
@@ -41,15 +45,17 @@ public class NewsDownloadHelper {
                         try {
                             JSONArray articles = response.getJSONArray("articles");
                             String title, description, urlToNews, urlToImage;
-                            for( int i = 0; i < articles.length(); i++ ){
+                            for( int i = 0; i < articles.length() && i < maxNoOfNews ; i++ ){
                                 JSONObject article = articles.getJSONObject(i);
                                 title = article.getString("title");
                                 description = article.getString("description");
                                 urlToImage = article.getString("urlToImage");
                                 urlToNews = article.getString("url");
                                 newsList.add(new News(title,description,category, urlToNews,urlToImage));
-                                Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
                             }
+
+                            Collections.shuffle(newsList);
+                            Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
                         } catch (Exception e) {
                             Log.i("Error:::::::::::::::", "" + e.getMessage());
                         }

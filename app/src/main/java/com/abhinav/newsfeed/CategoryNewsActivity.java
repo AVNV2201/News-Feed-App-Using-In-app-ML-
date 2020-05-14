@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import java.util.ArrayList;
+
 public class CategoryNewsActivity extends AppCompatActivity {
 
     @Override
@@ -22,8 +24,13 @@ public class CategoryNewsActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.categoryNewsRcView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        ArrayList<News> categoryNewsList = new ArrayList<>();
+
+        NewsCardAdapter adapter = new NewsCardAdapter(this, categoryNewsList );
+        recyclerView.setAdapter(adapter);
+
         NewsDownloadHelper helper = new NewsDownloadHelper(this);
-        helper.getNewsList(recyclerView, ResourceHelper.countryCodes.get(country), ResourceHelper.categoryCodes.get(category));
+        helper.setNewsList(recyclerView, categoryNewsList, ResourceHelper.countryCodes.get(country), ResourceHelper.categoryCodes.get(category));
 
     }
 }

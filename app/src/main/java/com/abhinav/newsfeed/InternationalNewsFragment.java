@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class InternationalNewsFragment extends Fragment {
 
     @Nullable
@@ -21,8 +23,16 @@ public class InternationalNewsFragment extends Fragment {
         RecyclerView recyclerView = root.findViewById(R.id.internationalrcView);
         recyclerView.setLayoutManager( new LinearLayoutManager(root.getContext()));
 
+        ArrayList<News> internationalNewsList = new ArrayList<>();
+
+        NewsCardAdapter adapter = new NewsCardAdapter(getContext(), internationalNewsList);
+        recyclerView.setAdapter(adapter);
+
         NewsDownloadHelper downloadHelper = new NewsDownloadHelper(root.getContext());
-        downloadHelper.getNewsList(recyclerView, ResourceHelper.Country.US, null);
+
+        for( int i = 1; i < ResourceHelper.countryCodes.size()-1; i++ ) {
+            downloadHelper.setNewsList(recyclerView, internationalNewsList, ResourceHelper.countryCodes.get(i), null);
+        }
 
         return root;
     }
