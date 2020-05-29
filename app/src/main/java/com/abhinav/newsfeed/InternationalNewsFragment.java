@@ -30,9 +30,17 @@ public class InternationalNewsFragment extends Fragment {
 
         NewsDownloadHelper downloadHelper = new NewsDownloadHelper(root.getContext());
 
+        /*
+        Loop to be used to show all international news
+        It will enabled after testing is over
         for( int i = 1; i < ResourceHelper.countryCodes.size()-1; i++ ) {
             downloadHelper.setNewsList(recyclerView, internationalNewsList, ResourceHelper.countryCodes.get(i), null);
         }
+         */
+
+        // for testing purpose, only one country news is shown in international news section
+        downloadHelper.setNewsList(recyclerView, internationalNewsList, ResourceHelper.Country.US, null);
+
 
         return root;
     }

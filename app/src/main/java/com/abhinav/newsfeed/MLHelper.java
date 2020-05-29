@@ -10,13 +10,13 @@ public class MLHelper {
     static String  storageNameForNoOfRewards = "bc" ;
     static String  storageNameForNoOfSelections = "cd" ;
 
-    static int TOTAL_NEWS_COUNT = 50;
+    static int TOTAL_NEWS_COUNT = 20;
 
     static int NO_FILTER = 0;
     static int SQUARE_FILTER = 1;
     static int CUBIC_FILTER = 2;
 
-    static void filter( int filterType, double[] arr ){
+    private static void filter(int filterType, double[] arr){
 
         if( filterType == SQUARE_FILTER ){
             for( int i = 0; i < arr.length; i++ ){
