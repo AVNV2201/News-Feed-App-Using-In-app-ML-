@@ -11,11 +11,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.kwabenaberko.newsapilib.NewsApiClient;
+import com.kwabenaberko.newsapilib.models.Article;
+import com.kwabenaberko.newsapilib.models.request.TopHeadlinesRequest;
+import com.kwabenaberko.newsapilib.models.response.ArticleResponse;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 public class NewsDownloadHelper {
@@ -28,42 +33,39 @@ public class NewsDownloadHelper {
 
     void setNewsList(final RecyclerView recyclerView, final ArrayList<News> newsList, String country, final String category){
 
-        String url = ResourceHelper.NEWS_URL + "country=" + country ;
-        if( category != null )
-            url += "&category=" + category;
-        url += "&apiKey=" + ResourceHelper.NEWS_API_KEY;
-
-        JsonObjectRequest request = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
+        NewsApiClient newsApiClient = new NewsApiClient("ed99e8bfdeb44fc381142c485ef29a88");
+        newsApiClient.getTopHeadlines(
+                new TopHeadlinesRequest.Builder()
+                    .country(country)
+                    .category(category)
+                    .build(),
+                new NewsApiClient.ArticlesResponseCallback() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onSuccess(ArticleResponse articleResponse) {
+//                        Log.i("Success:::::::::", articleResponse.getArticles().get(0).getTitle());
                         try {
-                            JSONArray articles = response.getJSONArray("articles");
-                            String title, description, urlToNews, urlToImage;
-                            for( int i = 0; i < articles.length(); i++ ){
-                                JSONObject article = articles.getJSONObject(i);
-                                title = article.getString("title");
-                                description = article.getString("description");
-                                urlToImage = article.getString("urlToImage");
-                                urlToNews = article.getString("url");
-                                newsList.add(new News(title,description,category, urlToNews,urlToImage));
-                                Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
+                            for( int i = 0; i < articleResponse.getArticles().size() ; i++ ){
+                                Article article = articleResponse.getArticles().get(i);
+                                newsList.add(new News(
+                                        article.getTitle(),
+                                        article.getDescription(),
+                                        category,
+                                        article.getUrl(),
+                                        article.getUrlToImage()
+                                ));
                             }
+
+                            Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
                         } catch (Exception e) {
                             Log.i("Error:::::::::::::::", "" + e.getMessage());
                         }
                     }
-                }, new Response.ErrorListener() {
 
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        Log.i("Error:::::::::::::::", "" + error.getMessage());
+                    public void onFailure(Throwable throwable) {
+                        Log.i("Again:::::::::::::::::::::","error");
                     }
-                });
-
-        RequestQueue queue = Volley.newRequestQueue( context );
-        queue.add(request);
+                }
+        );
     }
 }

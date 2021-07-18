@@ -45,13 +45,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // checking for internet connectivity
-        try {
-            if( !ResourceHelper.isConnected() ){
-                findViewById(R.id.noInternetImage).setVisibility(View.VISIBLE);
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, "Something went Wrong!",Toast.LENGTH_SHORT).show();
-        }
+//        try {
+//            if( !ResourceHelper.isConnected() ){
+//                Log.i("yoyoyo::::::::::::::::::::"," yo yo ");
+//                findViewById(R.id.noInternetImage).setVisibility(View.VISIBLE);
+//            }
+//        } catch (Exception e) {
+//            Toast.makeText(this, "Something went Wrong!",Toast.LENGTH_SHORT).show();
+//        }
 
         // opening database and table
         database = this.openOrCreateDatabase( StorageHelper.DATABASE_NAME, Context.MODE_PRIVATE,null);
